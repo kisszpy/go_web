@@ -22,9 +22,16 @@ func Insert(model interface{}) {
 	db.Create(model)
 }
 
-func FindById(model interface{}) {
-	db.Where("id = ?", 1).Find(model)
+func FindById(model interface{}, id int) {
+	db.Where("id = ?", id).Find(model)
 }
 func Update(model interface{}) {
 	db.Save(model)
+}
+
+func FindAll(list interface{}) {
+	db.Order("id desc").Find(list)
+}
+func Delete(mode interface{}) {
+	db.Delete(mode)
 }

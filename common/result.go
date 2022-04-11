@@ -17,6 +17,9 @@ type Result struct {
 func Success(data interface{}, ctx *gin.Context) {
 	ctx.JSON(SuccessCode, success(data))
 }
+func Ok(ctx *gin.Context) {
+	ctx.JSON(SuccessCode, success(make(map[string]string)))
+}
 
 func success(data interface{}) Result {
 	return Result{
