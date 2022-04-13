@@ -48,3 +48,14 @@ func (UserController) GetUserInfo(ctx *gin.Context) {
 	}
 	common.Success(profileResp, ctx)
 }
+
+func (UserController) SettingRole(ctx *gin.Context) {
+	settingRoleReq := &req.SettingRoleReq{}
+	ctx.BindJSON(settingRoleReq)
+	err := userService.SettingRole(settingRoleReq)
+	if err != nil {
+		common.Fail(err.Error(), ctx)
+	} else {
+		common.Ok(ctx)
+	}
+}

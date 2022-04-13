@@ -9,6 +9,7 @@ var (
 	userController  = new(controller.UserController)
 	loginController = new(controller.LoginController)
 	menuController  = new(controller.MenuController)
+	roleController  = new(controller.RoleController)
 )
 
 func SiteRouter(e *gin.Engine) {
@@ -27,47 +28,63 @@ func UserRouter(e *gin.Engine) {
 	//e.POST("/api/v1/register", controller.Register)
 }
 func AdminRouter(e *gin.Engine) {
-	/**
-	后台登录接口
-	*/
-	e.POST("/api/v1/admin/login", loginController.Login)
-	/**
+	group := e.Group("/api/v1/admin")
+	{
+		/**
+		后台登录接口
+		*/
+		group.POST("/login", loginController.Login)
+		/**
 
-	 */
-	e.POST("/api/v1/admin/logout", loginController.LogOut)
+		 */
+		group.POST("/logout", loginController.LogOut)
 
-	/**
-	后台用户信息
-	*/
-	e.GET("/api/v1/admin/loginInfo", userController.GetUserInfo)
-	/**
-	系统菜单
-	*/
-	e.GET("/api/v1/admin/system/menus", menuController.ShowMenus)
+		/**
+		后台用户信息
+		*/
+		group.GET("/loginInfo", userController.GetUserInfo)
+		/**
+		系统菜单
+		*/
+		group.GET("/system/menus", menuController.ShowMenus)
 
-	/**
-	后台用户列表
-	*/
-	e.POST("/api/v1/admin/system/user/list", userController.List)
+		/**
+		后台用户列表
+		*/
+		group.POST("/system/user/list", userController.List)
 
-	/**
-	添加用户
-	*/
-	e.POST("/api/v1/admin/system/user/create", userController.Create)
+		/**
+		添加用户
+		*/
+		group.POST("/system/user/create", userController.Create)
 
-	/**
-	用户删除
-	*/
-	e.POST("/api/v1/admin/system/user/delete", userController.Delete)
-	/**
-	用户删除
-	*/
-	e.POST("/api/v1/admin/system/user/modify", userController.Modify)
-	/**
-	测试框架
-	*/
-	e.GET("/api/v1/admin/system/user/test", userController.List)
-	e.POST("/api/v1/admin/system/resource/load", menuController.Load)
-	e.POST("/api/v1/admin/system/test", menuController.Test)
-	e.POST("/api/v1/admin/system/test2", menuController.Test2)
+		/**
+		用户删除
+		*/
+		group.POST("/system/user/delete", userController.Delete)
+		/**
+		用户删除
+		*/
+		group.POST("/system/user/modify", userController.Modify)
+		/**
+		设置角色
+		*/
+		group.POST("/system/user/settingRole", userController.SettingRole)
+		/**
+		角色部分 start ------------------------------
+		*/
+		group.POST("/system/role/create", roleController.Create)
+
+		/**
+		角色部分 end   ------------------------------
+		*/
+		/**
+		测试框架
+		*/
+		group.GET("/api/v1/admin/system/user/test", userController.List)
+		group.POST("/api/v1/admin/system/resource/load", menuController.Load)
+		group.POST("/api/v1/admin/system/test", menuController.Test)
+		group.POST("/api/v1/admin/system/test2", menuController.Test2)
+	}
+
 }

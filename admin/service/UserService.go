@@ -85,3 +85,20 @@ func (UserService) Login(loginReq *req.LoginReq) (*model.User, error) {
 		return nil, errors.New("用户名或密码错误")
 	}
 }
+
+//SettingRole 设定角色 /*
+func (UserService) SettingRole(roleReq *req.SettingRoleReq) error {
+	dest := &model.UserRole{}
+	global.GDB.Model(&model.UserRole{}).Where("role_id = ? and user_id = ?", roleReq.RoleId, roleReq.UserId).First(dest)
+	if dest != nil {
+		return errors.New("角色已经存在，不能重复设定")
+	}
+	global.GDB.Model(&model.UserRole{}).Create(&model.UserRole{
+		UserId:     roleReq.UserId,
+		RoleId:     roleReq.RoleId,
+		CreateTime: time.Now(),
+		UpdateTime: time.Now(),
+		Status:     0,
+	})
+	return nil
+}

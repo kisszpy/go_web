@@ -2,6 +2,7 @@ package controller
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"go_web/admin/model"
 	"go_web/admin/req"
@@ -9,6 +10,7 @@ import (
 	"go_web/admin/service"
 	"go_web/common"
 	"go_web/global"
+	"time"
 )
 
 var resourceService = new(service.ResourceService)
@@ -45,52 +47,6 @@ func (MenuController) ShowMenus(ctx *gin.Context) {
 			treeMenu = append(treeMenu, findChildren(item, menuList))
 		}
 	}
-	/**
-	系统菜单模拟
-	  {
-	    path: '/permission',
-	    component: Layout,
-	    redirect: '/permission/page',
-	    alwaysShow: true, // will always show the root menu
-	    name: 'Permission',
-	    meta: {
-	      title: 'permission',
-	      icon: 'lock',
-	      roles: ['admin', 'editor'] // you can set roles in root nav
-	    },
-	    children: [
-	      {
-	        path: 'page',
-	        component: () => import('@/views/permission/page'),
-	        name: 'PagePermission',
-	        meta: {
-	          title: 'pagePermission',
-	          roles: ['admin'] // or you can only set roles in sub nav
-	        }
-	      },
-	      {
-	        path: 'directive',
-	        component: () => import('@/views/permission/directive'),
-	        name: 'DirectivePermission',
-	        meta: {
-	          title: 'directivePermission'
-	          // if do not set roles, means: this page does not require permission
-	        }
-	      },
-	      {
-	        path: 'role',
-	        component: () => import('@/views/permission/role'),
-	        name: 'RolePermission',
-	        meta: {
-	          title: 'rolePermission',
-	          roles: ['admin']
-	        }
-	      }
-	    ]
-	  },
-
-
-	*/
 	var menu resp.Menu
 	menu.AlwaysShow = true
 	menu.Redirect = "/permission/page"
@@ -159,9 +115,15 @@ func (c MenuController) Test(ctx *gin.Context) {
 }
 
 func (c MenuController) Test2(ctx *gin.Context) {
-	token := ctx.GetHeader("Auth-Token")
-	verifyResult, _ := global.Verify(token)
-	common.Success(verifyResult, ctx)
+	//token := ctx.GetHeader("Auth-Token")
+	//verifyResult, _ := global.Verify(token)
+	//common.Success(verifyResult, ctx)
+	eq := global.Toolkit.Eq("2", "2")
+	fmt.Printf("%v \n", eq)
+	myTime := resp.MyTime{
+		CreateTime: common.Time(time.Now()),
+	}
+	common.Success(myTime, ctx)
 }
 
 func findChildren(root resp.Menu, menus []resp.Menu) resp.Menu {

@@ -8,5 +8,5 @@ type LoadMenuResp struct {
 	Title      string `json:"title"`
 	Component  string `json:"component"`
 	Path       string `json:"path"`
-	AlwaysShow bool   `json:"always_show"`
+	AlwaysShow bool   `json:"alwaysShow"`
 }
