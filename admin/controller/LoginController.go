@@ -13,7 +13,6 @@ type LoginController struct {
 }
 
 func (LoginController) Login(ctx *gin.Context) {
-	//data := "admin-token"
 	loginReq := &req.LoginReq{}
 	ctx.BindJSON(loginReq)
 	e := loginReq.CheckArguments()
@@ -22,12 +21,11 @@ func (LoginController) Login(ctx *gin.Context) {
 	}
 	loginUser, err := userService.Login(loginReq)
 	if err == nil {
-		token := global.GetToken(strconv.Itoa(loginUser.Id), "www.yukens.com")
-		loginResponse := resp.LoginResp{
+		token := global.GetToken(strconv.Itoa(loginUser.Id))
+		common.Success(resp.LoginResp{
 			AccessToken:  token,
 			RefreshToken: token,
-		}
-		common.Success(loginResponse, ctx)
+		}, ctx)
 	} else {
 		common.Fail(err.Error(), ctx)
 	}

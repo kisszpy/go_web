@@ -11,8 +11,11 @@ var (
 	Toolkit *Utils
 )
 
-const AuthToken = "Auth-Token"
-const UserId = "userId"
+const (
+	AuthToken = "Auth-Token"
+	UserId    = "userId"
+	Issuer    = "www.yukens.com"
+)
 
 func init() {
 	dsn := "root:Metro#79@tcp(127.0.0.1:3306)/go_db?charset=utf8mb4&parseTime=true"

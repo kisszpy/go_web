@@ -9,9 +9,9 @@ import (
 
 var key = []byte("kisszpy")
 
-func GetToken(userId string, issuer string) string {
+func GetToken(userId string) string {
 	claims := jwt.RegisteredClaims{
-		Issuer:    issuer,
+		Issuer:    Issuer,
 		Subject:   userId,
 		ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * 7 * time.Hour)),
 		IssuedAt:  jwt.NewNumericDate(time.Now()),

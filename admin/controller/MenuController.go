@@ -110,7 +110,7 @@ func (MenuController) Load(context *gin.Context) {
 }
 
 func (c MenuController) Test(ctx *gin.Context) {
-	token := global.GetToken("200", "www.yukens.com")
+	token := global.GetToken("200")
 	common.Success(token, ctx)
 }
 
