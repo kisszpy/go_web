@@ -4,9 +4,11 @@ import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"go_web/admin/model"
+	"go_web/admin/req"
 	"go_web/admin/resp"
 	"go_web/admin/service"
 	"go_web/common"
+	"go_web/global"
 )
 
 var resourceService = new(service.ResourceService)
@@ -142,6 +144,24 @@ func (MenuController) ShowMenus(ctx *gin.Context) {
 	menus = append(menus, menu, menu2)
 	common.Success(treeMenu, ctx)
 
+}
+
+func (MenuController) Load(context *gin.Context) {
+	req := &req.IdReq{}
+	context.BindJSON(req)
+	result := resourceService.LoadResourceById(req.Id)
+	common.Success(result, context)
+}
+
+func (c MenuController) Test(ctx *gin.Context) {
+	token := global.GetToken("200", "www.yukens.com")
+	common.Success(token, ctx)
+}
+
+func (c MenuController) Test2(ctx *gin.Context) {
+	token := ctx.GetHeader("Auth-Token")
+	verifyResult, _ := global.Verify(token)
+	common.Success(verifyResult, ctx)
 }
 
 func findChildren(root resp.Menu, menus []resp.Menu) resp.Menu {

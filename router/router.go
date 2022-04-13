@@ -31,6 +31,10 @@ func AdminRouter(e *gin.Engine) {
 	后台登录接口
 	*/
 	e.POST("/api/v1/admin/login", loginController.Login)
+	/**
+
+	 */
+	e.POST("/api/v1/admin/logout", loginController.LogOut)
 
 	/**
 	后台用户信息
@@ -55,9 +59,15 @@ func AdminRouter(e *gin.Engine) {
 	用户删除
 	*/
 	e.POST("/api/v1/admin/system/user/delete", userController.Delete)
-
+	/**
+	用户删除
+	*/
+	e.POST("/api/v1/admin/system/user/modify", userController.Modify)
 	/**
 	测试框架
 	*/
 	e.GET("/api/v1/admin/system/user/test", userController.List)
+	e.POST("/api/v1/admin/system/resource/load", menuController.Load)
+	e.POST("/api/v1/admin/system/test", menuController.Test)
+	e.POST("/api/v1/admin/system/test2", menuController.Test2)
 }

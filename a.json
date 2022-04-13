@@ -1,54 +1,21 @@
-//{
-//  "name": "System",
-//  "path": "/system",
-//  "redirect": "/system",
-//  "component": "Layout",
-//  "alwaysShow": true,
-//  "meta": {
-//    "title": "系统管理",
-//    "icon": "lock"
-//  }
-//}
-//
-//{
-//"name": "Role",
-//"path": "role",
-//"component": "system/role",
-//"alwaysShow": true,
-//"meta": {
-//"title": "角色管理",
-//"icon": "lock"
-//}
-//}
-//{
-//"name": "User",
-//"path": "user",
-//"component": "system/user",
-//"alwaysShow": true,
-//"meta": {
-//"title": "用户管理",
-//"icon": "lock"
-//}
-//}
-//
-//
-//
-//m2:= resp.Menu{
-//Path: "user",
-//Component: "system/user",
-//Name: "User",
-//Meta: resp.Meta{
-//Title: "用户管理",
-//Icon: "lock",
-//},
-//}
-//
-//m3: = resp.Menu{
-//Path: "role",
-//Component: "system/role",
-//Name: "Role",
-//Meta: resp.Meta{
-//Title: "角色管理",
-//Icon: "lock",
-//},
-//}
+{
+  "meta": {
+    "icon": "el-icon-menu",
+    "title": "菜单管理"
+  },
+  "name": "Menu",
+  "path": "menu",
+  "component": "system/menu"
+},
+
+{
+"meta": {
+"icon": "el-icon-setting",
+"title": "订单管理"
+},
+"name": "Order",
+"path": "/order",
+"redirect": "/order",
+"component": "Layout",
+"alwaysShow": true
+}

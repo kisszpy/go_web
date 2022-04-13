@@ -14,6 +14,13 @@ type Result struct {
 	Data interface{} `json:"data"`
 }
 
+type PageResult struct {
+	List     interface{} `json:"list"`
+	Total    int64       `json:"total"`
+	Page     int         `json:"page"`
+	PageSize int         `json:"pageSize"`
+}
+
 func Success(data interface{}, ctx *gin.Context) {
 	ctx.JSON(SuccessCode, success(data))
 }
@@ -29,10 +36,11 @@ func success(data interface{}) Result {
 	}
 }
 
-func Fail(error string) Result {
-	return Result{
+func Fail(error string, ctx *gin.Context) {
+	fail := Result{
 		Code: 500,
-		Msg:  "fail",
+		Msg:  error,
 		Data: nil,
 	}
+	ctx.JSON(500, fail)
 }

@@ -1,19 +1,12 @@
 package resp
 
-type LoginResp struct {
-	/**
-	'admin-token': {
-	    roles: ['admin'],
-	    introduction: 'I am a super administrator',
-	    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-	    name: 'Super Admin'
-	  },
-	*/
-	Roles        []string `json:"roles"`
-	Introduction string   `json:"introduction"`
-	Avatar       string   `json:"avatar"`
-	Name         string   `json:"name"`
-}
+//type LoginResp struct {
+//
+//	Roles        []string `json:"roles"`
+//	Introduction string   `json:"introduction"`
+//	Avatar       string   `json:"avatar"`
+//	Name         string   `json:"name"`
+//}
 
 type Meta struct {
 	Title string `json:"title"`
