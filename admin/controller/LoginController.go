@@ -6,6 +6,7 @@ import (
 	"go_web/admin/resp"
 	"go_web/common"
 	"go_web/global"
+	"strconv"
 )
 
 type LoginController struct {
@@ -21,7 +22,7 @@ func (LoginController) Login(ctx *gin.Context) {
 	}
 	loginUser, err := userService.Login(loginReq)
 	if err == nil {
-		token := global.GetToken(string(loginUser.Id), "www.yukens.com")
+		token := global.GetToken(strconv.Itoa(loginUser.Id), "www.yukens.com")
 		loginResponse := resp.LoginResp{
 			AccessToken:  token,
 			RefreshToken: token,

@@ -55,6 +55,7 @@ func (UserService) List(query req.QueryUserReq) (common.PageResult, error) {
 			Username:   user.Username,
 			Email:      user.Email,
 			CreateTime: user.CreateTime,
+			Avatar:     user.Avatar,
 			Status:     user.Status,
 		}
 		return resp
@@ -101,4 +102,10 @@ func (UserService) SettingRole(roleReq *req.SettingRoleReq) error {
 		Status:     0,
 	})
 	return nil
+}
+
+func (UserService) GetUserInfo(id interface{}) *model.User {
+	dest := &model.User{}
+	global.GDB.Model(&model.User{}).Where("id = ?", id).Find(dest)
+	return dest
 }

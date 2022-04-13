@@ -1,11 +1,13 @@
 package controller
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"go_web/admin/req"
 	"go_web/admin/resp"
 	"go_web/admin/service"
 	"go_web/common"
+	"go_web/global"
 )
 
 var userService = new(service.UserService)
@@ -38,12 +40,16 @@ func (UserController) Modify(ctx *gin.Context) {
 }
 
 func (UserController) GetUserInfo(ctx *gin.Context) {
-	ctx.GetHeader("")
+	value, exists := ctx.Get(global.UserId)
+	if exists {
+		fmt.Printf("current user is %v \n", value)
+	}
+	info := userService.GetUserInfo(value)
 	roles := append([]string{}, "admin")
 	profileResp := resp.UserProfileResp{
-		Name:         "Super Admin",
-		Avatar:       "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
-		Introduction: "I am a super administrator",
+		Name:         info.Username,
+		Avatar:       info.Avatar,
+		Introduction: info.Introduction,
 		Roles:        roles,
 	}
 	common.Success(profileResp, ctx)

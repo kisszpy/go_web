@@ -25,30 +25,29 @@ func (RoleService) Create(createRoleReq *req.CreateRoleReq) {
 	global.GDB.Model(&model.Role{}).Create(&role)
 }
 
-func (RoleService) List(query req.QueryUserReq) (common.PageResult, error) {
+func (RoleService) List(query *req.RoleListReq) (common.PageResult, error) {
 	pageResult := common.PageResult{}
 	pageResult.Page = query.Page
 	pageResult.PageSize = query.PageSize
 	limit := query.PageSize
 	offset := query.PageSize * (query.Page - 1)
 	// 创建db
-	db := global.GDB.Model(&model.User{})
+	db := global.GDB.Model(&model.Role{})
 	// 如果有条件搜索 下方会自动创建搜索语句
-	if query.Username != "" {
-		db = db.Where("`username` LIKE ?", "%"+query.Username+"%")
+	if query.RoleName != "" {
+		db = db.Where("`role_name` LIKE ?", "%"+query.RoleName+"%")
 	}
 	db.Count(&pageResult.Total)
-	var list []model.User
+	var list []model.Role
 	err := db.Limit(limit).Offset(offset).Order("id desc").Find(&list).Error
 	respList := stream.OfSlice(list).Map(func(e types.T) types.R {
-		user := e.(model.User)
-		resp := resp.UserListResp{
-			Id:         user.Id,
-			Nickname:   user.Nickname,
-			Username:   user.Username,
-			Email:      user.Email,
-			CreateTime: user.CreateTime,
-			Status:     user.Status,
+		role := e.(model.Role)
+		resp := resp.RoleListResp{
+			Id:         role.Id,
+			RoleName:   role.RoleName,
+			RoleDesc:   role.RoleDesc,
+			CreateTime: role.CreateTime,
+			Status:     role.Status,
 		}
 		return resp
 	}).ToSlice()

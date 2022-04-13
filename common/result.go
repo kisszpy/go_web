@@ -5,9 +5,6 @@ import (
 	"net/http"
 )
 
-const SuccessCode = 200
-const FailCode = 500
-
 type Result struct {
 	Code int         `json:"code"`
 	Msg  string      `json:"msg"`
@@ -22,10 +19,10 @@ type PageResult struct {
 }
 
 func Success(data interface{}, ctx *gin.Context) {
-	ctx.JSON(SuccessCode, success(data))
+	ctx.JSON(http.StatusOK, success(data))
 }
 func Ok(ctx *gin.Context) {
-	ctx.JSON(SuccessCode, success(make(map[string]string)))
+	ctx.JSON(http.StatusOK, success(make(map[string]string)))
 }
 
 func success(data interface{}) Result {
@@ -40,7 +37,7 @@ func Fail(error string, ctx *gin.Context) {
 	fail := Result{
 		Code: 500,
 		Msg:  error,
-		Data: nil,
+		Data: make(map[string]string),
 	}
 	ctx.JSON(500, fail)
 }

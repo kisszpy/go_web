@@ -19,3 +19,12 @@
 "component": "Layout",
 "alwaysShow": true
 }
+
+{
+"meta": {
+"icon": "el-icon-menu", "title": "销售订单"},
+"name": "Menu",
+"path": "menu",
+"component":
+"system/menu"
+}

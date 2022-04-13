@@ -1,8 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"go_web/common"
+	"go_web/global"
 	"go_web/router"
+	"log"
 	"net/http"
 )
 
@@ -25,8 +29,52 @@ func main() {
 	e.LoadHTMLGlob("templates/**")
 	e.Static("/www", "./www")
 	e.Use(Cors())
+	e.Use(MiddleWare())
 	router.UserRouter(e)
 	router.SiteRouter(e)
 	router.AdminRouter(e)
 	e.Run("localhost:9999")
+}
+
+func MiddleWare() gin.HandlerFunc {
+	return func(context *gin.Context) {
+		uri := context.Request.RequestURI
+		if !isWhiteList(uri) {
+			token := context.GetHeader(global.AuthToken)
+			if token == "" {
+				println("token is empty")
+				common.Fail("请先登录方可操作", context)
+				context.AbortWithStatus(200)
+				return
+			}
+			registeredClaims, err := global.Verify(token)
+			if err == nil {
+				userId := registeredClaims.Subject
+				context.Set(global.UserId, userId)
+				//context.Next()
+			} else {
+				common.Fail(err.Error(), context)
+				context.AbortWithStatus(200)
+				return
+			}
+
+		} else {
+			// 白名单无须校验token
+			context.Next()
+		}
+		log.Printf("request uri is %v", uri)
+		log.Printf("req uri is %v", uri)
+	}
+}
+func isWhiteList(uri string) bool {
+	fmt.Printf("uri is %v \n", uri)
+	whiteList := []string{
+		"/api/v1/admin/login",
+	}
+	for _, item := range whiteList {
+		if item == uri {
+			return true
+		}
+	}
+	return false
 }

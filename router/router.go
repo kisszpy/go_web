@@ -42,7 +42,7 @@ func AdminRouter(e *gin.Engine) {
 		/**
 		后台用户信息
 		*/
-		group.GET("/loginInfo", userController.GetUserInfo)
+		group.POST("/loginInfo", userController.GetUserInfo)
 		/**
 		系统菜单
 		*/
@@ -74,6 +74,7 @@ func AdminRouter(e *gin.Engine) {
 		角色部分 start ------------------------------
 		*/
 		group.POST("/system/role/create", roleController.Create)
+		group.POST("/system/role/list", roleController.List)
 
 		/**
 		角色部分 end   ------------------------------
@@ -81,10 +82,10 @@ func AdminRouter(e *gin.Engine) {
 		/**
 		测试框架
 		*/
-		group.GET("/api/v1/admin/system/user/test", userController.List)
-		group.POST("/api/v1/admin/system/resource/load", menuController.Load)
-		group.POST("/api/v1/admin/system/test", menuController.Test)
-		group.POST("/api/v1/admin/system/test2", menuController.Test2)
+		group.GET("/system/user/test", userController.List)
+		group.POST("/system/resource/load", menuController.Load)
+		group.POST("/system/test", menuController.Test)
+		group.POST("/system/test2", menuController.Test2)
 	}
 
 }

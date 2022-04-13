@@ -11,7 +11,6 @@ var key = []byte("kisszpy")
 
 func GetToken(userId string, issuer string) string {
 	claims := jwt.RegisteredClaims{
-		ID:        userId,
 		Issuer:    issuer,
 		Subject:   userId,
 		ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * 7 * time.Hour)),
@@ -26,10 +25,9 @@ func Verify(tokenStr string) (*jwt.RegisteredClaims, error) {
 
 	claims := &jwt.RegisteredClaims{}
 	token, err := jwt.ParseWithClaims(tokenStr, claims, func(token *jwt.Token) (interface{}, error) {
+		fmt.Printf("%v \n", claims)
 		return key, nil
 	})
-	fmt.Printf("%v ============== ", token)
-
 	if token.Valid {
 		return claims, nil
 	} else if errors.Is(err, jwt.ErrTokenExpired) {

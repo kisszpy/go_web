@@ -27,8 +27,12 @@ func (RoleController) Modify(ctx *gin.Context) {
 
 }
 
+// List 角色列表
 func (RoleController) List(ctx *gin.Context) {
-
+	roleListReq := &req.RoleListReq{}
+	ctx.BindJSON(roleListReq)
+	list, _ := roleService.List(roleListReq)
+	common.Success(list, ctx)
 }
 
 func (RoleController) Delete(ctx *gin.Context) {
