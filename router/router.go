@@ -49,6 +49,7 @@ func AdminRouter(e *gin.Engine) {
 		group.GET("/system/menus", menuController.ShowMenus)
 		group.POST("/system/menus/create", menuController.Create)
 		group.POST("/system/menus/modify", menuController.Modify)
+		group.POST("/system/menus/load", menuController.Load)
 
 		/**
 		后台用户列表
@@ -86,7 +87,6 @@ func AdminRouter(e *gin.Engine) {
 		测试框架
 		*/
 		group.GET("/system/user/test", userController.List)
-		group.POST("/system/resource/load", menuController.Load)
 		group.POST("/system/test", menuController.Test)
 		group.POST("/system/test2", menuController.Test2)
 	}

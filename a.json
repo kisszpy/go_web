@@ -28,3 +28,6 @@
 "component":
 "system/menu"
 }
+
+
+{"meta": {"icon": "lock", "title": "客户管理"}, "name": "客户管理", "path": "/system", "redirect": "", "component": "Layout", "alwaysShow": true}

@@ -3,9 +3,9 @@ package model
 import "time"
 
 type Resource struct {
-	Id         uint
+	Id         int
 	Name       string
-	Pid        uint
+	Pid        int
 	Data       string
 	CreateTime time.Time
 	UpdateTime time.Time

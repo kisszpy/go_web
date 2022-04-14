@@ -54,8 +54,15 @@ func (MenuController) ShowMenus(ctx *gin.Context) {
 func (MenuController) Load(context *gin.Context) {
 	req := &req.IdReq{}
 	context.BindJSON(req)
+	fmt.Printf("request id is %v", req.Id)
 	result := resourceService.LoadResourceById(req.Id)
-	common.Success(result, context)
+	var data = resp.LoadMenuOfDataResp{
+		Id:   result.Id,
+		Pid:  result.Pid,
+		Name: result.Name,
+		Data: result.Data,
+	}
+	common.Success(data, context)
 }
 
 func (MenuController) Test(ctx *gin.Context) {

@@ -10,3 +10,10 @@ type LoadMenuResp struct {
 	Path       string `json:"path"`
 	AlwaysShow bool   `json:"alwaysShow"`
 }
+
+type LoadMenuOfDataResp struct {
+	Id   int    `json:"id"`
+	Name string `json:"name"`
+	Pid  int    `json:"pid"`
+	Data string `json:"data"`
+}

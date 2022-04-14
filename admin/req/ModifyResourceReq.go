@@ -1,8 +1,8 @@
 package req
 
 type ModifyResourceReq struct {
-	Id         uint   `json:"id"`
-	Pid        uint   `json:"pid"`
+	Id         int    `json:"id"`
+	Pid        int    `json:"pid"`
 	AlwaysShow bool   `json:"alwaysShow"`
 	Name       string `json:"name"`
 	Path       string `json:"path"`

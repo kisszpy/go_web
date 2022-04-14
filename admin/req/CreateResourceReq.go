@@ -1,7 +1,7 @@
 package req
 
 type CreateResourceReq struct {
-	Pid        uint   `json:"pid"`
+	Pid        int    `json:"pid"`
 	AlwaysShow bool   `json:"alwaysShow"`
 	Name       string `json:"name"`
 	Path       string `json:"path"`
