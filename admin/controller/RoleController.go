@@ -24,7 +24,10 @@ func (RoleController) Create(ctx *gin.Context) {
 
 // Modify 更新角色
 func (RoleController) Modify(ctx *gin.Context) {
-
+	req := &req.ModifyRoleReq{}
+	ctx.BindJSON(req)
+	roleService.Modify(req)
+	common.Ok(ctx)
 }
 
 // List 角色列表
@@ -36,5 +39,9 @@ func (RoleController) List(ctx *gin.Context) {
 }
 
 func (RoleController) Delete(ctx *gin.Context) {
+	idReq := &req.IdReq{}
+	ctx.BindJSON(idReq)
+	roleService.Delete(idReq.Id)
+	common.Ok(ctx)
 
 }

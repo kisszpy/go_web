@@ -57,11 +57,13 @@ func (RoleService) List(query *req.RoleListReq) (common.PageResult, error) {
 }
 
 func (RoleService) Delete(id int) {
-	global.GDB.Model(&model.User{}).Delete("id = ?", id)
+	global.GDB.Model(&model.Role{}).Delete("id = ?", id)
 }
-func (RoleService) Modify() {
-	dest := &model.User{}
-	global.GDB.Model(&model.User{}).Where("id = ?", 1).Find(dest)
-	dest.Email = "guaga@163.com"
+func (RoleService) Modify(req *req.ModifyRoleReq) {
+	dest := &model.Role{}
+	global.GDB.Model(&model.Role{}).Where("id = ?", req.Id).Find(dest)
+	dest.RoleName = req.RoleName
+	dest.RoleDesc = req.RoleDesc
+	dest.UpdateTime = time.Now()
 	global.GDB.Updates(dest)
 }

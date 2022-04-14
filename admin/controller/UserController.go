@@ -19,7 +19,7 @@ func (UserController) Create(ctx *gin.Context) {
 	createReq := req.UserCreateReq{}
 	ctx.BindJSON(&createReq)
 	userService.Create(&createReq)
-	common.Success("ok", ctx)
+	common.Ok(ctx)
 }
 func (UserController) Delete(ctx *gin.Context) {
 	var idReq req.IdReq

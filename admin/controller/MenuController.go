@@ -47,57 +47,6 @@ func (MenuController) ShowMenus(ctx *gin.Context) {
 			treeMenu = append(treeMenu, findChildren(item, menuList))
 		}
 	}
-	var menu resp.Menu
-	menu.AlwaysShow = true
-	menu.Redirect = "/permission/page"
-	menu.Component = "Layout"
-	menu.Path = "/permission"
-	menu.Name = "permission"
-	menu.Meta = resp.Meta{Title: "permission", Icon: "lock"}
-
-	m := resp.Menu{
-		Path:      "page",
-		Component: "permission/page",
-		Name:      "PagePermission",
-		Meta: resp.Meta{
-			Title: "PagePermission",
-			Icon:  "lock",
-		},
-	}
-	menu.Children = append(menu.Children, m)
-
-	var menu2 resp.Menu
-	menu2.AlwaysShow = true
-	menu2.Redirect = "/system/user"
-	menu2.Component = "Layout"
-	menu2.Path = "/system"
-	menu2.Name = "System"
-	menu2.Meta = resp.Meta{Title: "系统管理", Icon: "lock"}
-
-	m2 := resp.Menu{
-		Path:      "user",
-		Component: "system/user",
-		Name:      "User",
-		Meta: resp.Meta{
-			Title: "用户管理",
-			Icon:  "lock",
-		},
-	}
-
-	m3 := resp.Menu{
-		Path:      "role",
-		Component: "system/role",
-		Name:      "Role",
-		Meta: resp.Meta{
-			Title: "角色管理",
-			Icon:  "lock",
-		},
-	}
-
-	menu2.Children = append(menu2.Children, m2, m3)
-
-	var menus []resp.Menu
-	menus = append(menus, menu, menu2)
 	common.Success(treeMenu, ctx)
 
 }

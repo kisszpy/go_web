@@ -75,6 +75,8 @@ func AdminRouter(e *gin.Engine) {
 		*/
 		group.POST("/system/role/create", roleController.Create)
 		group.POST("/system/role/list", roleController.List)
+		group.POST("/system/role/modify", roleController.Modify)
+		group.POST("/system/role/delete", roleController.Delete)
 
 		/**
 		角色部分 end   ------------------------------
