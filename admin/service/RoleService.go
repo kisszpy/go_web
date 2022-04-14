@@ -24,7 +24,6 @@ func (RoleService) Create(createRoleReq *req.CreateRoleReq) {
 	}
 	global.GDB.Model(&model.Role{}).Create(&role)
 }
-
 func (RoleService) List(query *req.RoleListReq) (common.PageResult, error) {
 	pageResult := common.PageResult{}
 	pageResult.Page = query.Page
@@ -55,7 +54,6 @@ func (RoleService) List(query *req.RoleListReq) (common.PageResult, error) {
 	return pageResult, err
 
 }
-
 func (RoleService) Delete(id int) {
 	global.GDB.Model(&model.Role{}).Delete("id = ?", id)
 }

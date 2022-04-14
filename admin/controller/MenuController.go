@@ -58,12 +58,12 @@ func (MenuController) Load(context *gin.Context) {
 	common.Success(result, context)
 }
 
-func (c MenuController) Test(ctx *gin.Context) {
+func (MenuController) Test(ctx *gin.Context) {
 	token := global.GetToken("200")
 	common.Success(token, ctx)
 }
 
-func (c MenuController) Test2(ctx *gin.Context) {
+func (MenuController) Test2(ctx *gin.Context) {
 	//token := ctx.GetHeader("Auth-Token")
 	//verifyResult, _ := global.Verify(token)
 	//common.Success(verifyResult, ctx)
@@ -73,6 +73,20 @@ func (c MenuController) Test2(ctx *gin.Context) {
 		CreateTime: common.Time(time.Now()),
 	}
 	common.Success(myTime, ctx)
+}
+
+func (MenuController) Create(ctx *gin.Context) {
+	req := &req.CreateResourceReq{}
+	ctx.BindJSON(req)
+	resourceService.Create(req)
+	common.Ok(ctx)
+}
+
+func (MenuController) Modify(ctx *gin.Context) {
+	resourceReq := &req.ModifyResourceReq{}
+	ctx.BindJSON(resourceReq)
+	resourceService.Modify(resourceReq)
+	common.Ok(ctx)
 }
 
 func findChildren(root resp.Menu, menus []resp.Menu) resp.Menu {

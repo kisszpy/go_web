@@ -47,6 +47,8 @@ func AdminRouter(e *gin.Engine) {
 		系统菜单
 		*/
 		group.GET("/system/menus", menuController.ShowMenus)
+		group.POST("/system/menus/create", menuController.Create)
+		group.POST("/system/menus/modify", menuController.Modify)
 
 		/**
 		后台用户列表
@@ -77,7 +79,6 @@ func AdminRouter(e *gin.Engine) {
 		group.POST("/system/role/list", roleController.List)
 		group.POST("/system/role/modify", roleController.Modify)
 		group.POST("/system/role/delete", roleController.Delete)
-
 		/**
 		角色部分 end   ------------------------------
 		*/
