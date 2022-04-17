@@ -10,6 +10,7 @@ var (
 	loginController = new(controller.LoginController)
 	menuController  = new(controller.MenuController)
 	roleController  = new(controller.RoleController)
+	priceController = new(controller.PriceController)
 )
 
 func SiteRouter(e *gin.Engine) {
@@ -27,6 +28,17 @@ func UserRouter(e *gin.Engine) {
 	*/
 	//e.POST("/api/v1/register", controller.Register)
 }
+
+func PriceRouter(e *gin.Engine) {
+	group := e.Group("/api/v1/admin/price")
+	{
+		group.POST("/create", priceController.Create)
+		group.POST("/import", priceController.Import)
+		group.POST("/test3", priceController.Test)
+
+	}
+}
+
 func AdminRouter(e *gin.Engine) {
 	group := e.Group("/api/v1/admin")
 	{

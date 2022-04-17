@@ -1,0 +1,12 @@
+# jwt config
+jwt:
+  issuer: www.yukens.com
+  key: kisszpy
+# mysql config
+mysql:
+  host: 127.0.0.1
+  port: 3306
+# file upload config
+upload:
+  excel:
+    path: /tmp/excel/

@@ -30,9 +30,14 @@ func main() {
 	e.Static("/www", "./www")
 	e.Use(Cors())
 	e.Use(MiddleWare())
+	// 用户路由
 	router.UserRouter(e)
+	// 网站路由
 	router.SiteRouter(e)
+	// 后台路由
 	router.AdminRouter(e)
+	// 价格路由
+	router.PriceRouter(e)
 	e.Run("localhost:9999")
 }
 

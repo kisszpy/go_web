@@ -1,6 +1,7 @@
 package global
 
 import (
+	"go_web/common"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"log"
@@ -8,7 +9,8 @@ import (
 
 var (
 	GDB     *gorm.DB
-	Toolkit *Utils
+	Toolkit Utils
+	Excel   common.Excel
 )
 
 const (
@@ -18,6 +20,11 @@ const (
 )
 
 func init() {
+	initDb()
+
+}
+
+func initDb() {
 	dsn := "root:Metro#79@tcp(127.0.0.1:3306)/go_db?charset=utf8mb4&parseTime=true"
 	database, err := gorm.Open(mysql.Open(dsn))
 	if err != nil {
@@ -25,5 +32,8 @@ func init() {
 		return
 	}
 	GDB = database
-	Toolkit = new(Utils)
+}
+
+func initConfig() {
+
 }
