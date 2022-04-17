@@ -5,6 +5,8 @@ import (
 	"go_web/admin/req"
 	"go_web/admin/service"
 	"go_web/common"
+	"go_web/global"
+	"log"
 )
 
 type RoleController struct {
@@ -43,5 +45,10 @@ func (RoleController) Delete(ctx *gin.Context) {
 	ctx.BindJSON(idReq)
 	roleService.Delete(idReq.Id)
 	common.Ok(ctx)
-
+}
+func (RoleController) GetRoleMenus(ctx *gin.Context) {
+	userId, exists := ctx.Get(global.UserId)
+	if exists {
+		log.Printf("currnet id is %v \n", userId)
+	}
 }

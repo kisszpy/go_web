@@ -65,3 +65,12 @@ func (RoleService) Modify(req *req.ModifyRoleReq) {
 	dest.UpdateTime = time.Now()
 	global.GDB.Updates(dest)
 }
+func (RoleService) RoleMenus(userId int) {
+	var roleList []model.Role
+	global.GDB.Model(&model.UserRole{}).Where("user_id in ?", userId).Find(&roleList)
+	// 获取当前用户的角色列表
+	var list []model.RolePermission
+	global.GDB.Model(&model.RolePermission{}).Where("role_id in ?").Find(&list)
+	// 获取资源构建树形结构
+
+}
