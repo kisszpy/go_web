@@ -7,6 +7,7 @@ type Meta struct {
 
 type Menu struct {
 	Id         int    `json:"id"`
+	Label      string `json:"label"`
 	Pid        int    `json:"pid"`
 	AlwaysShow bool   `json:"alwaysShow"`
 	Children   []Menu `json:"children"`

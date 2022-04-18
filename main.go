@@ -25,6 +25,11 @@ func Cors() gin.HandlerFunc {
 	}
 }
 func main() {
+	// 初始化nacos
+	nc := InitNacos()
+	// 注册服务
+	Register(nc)
+
 	e := gin.Default()
 	e.LoadHTMLGlob("templates/**")
 	e.Static("/www", "./www")
@@ -38,14 +43,14 @@ func main() {
 	router.AdminRouter(e)
 	// 价格路由
 	router.PriceRouter(e)
-	e.Run("localhost:9999")
+	e.Run("0.0.0.0:9999")
 }
 
 func MiddleWare() gin.HandlerFunc {
 	return func(context *gin.Context) {
 		uri := context.Request.RequestURI
 		if !isWhiteList(uri) {
-			token := context.GetHeader(global.AuthToken)
+			token := context.GetHeader(global.CONF.Jwt.Header)
 			if token == "" {
 				println("token is empty")
 				common.Fail("请先登录方可操作", context)
@@ -55,7 +60,7 @@ func MiddleWare() gin.HandlerFunc {
 			registeredClaims, err := global.Verify(token)
 			if err == nil {
 				userId := registeredClaims.Subject
-				context.Set(global.UserId, userId)
+				context.Set(global.CONF.Jwt.Context, userId)
 				//context.Next()
 			} else {
 				common.Fail(err.Error(), context)
@@ -75,6 +80,7 @@ func isWhiteList(uri string) bool {
 	fmt.Printf("uri is %v \n", uri)
 	whiteList := []string{
 		"/api/v1/admin/login",
+		"/api/v1/admin/test",
 	}
 	for _, item := range whiteList {
 		if item == uri {

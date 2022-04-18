@@ -1,7 +1,9 @@
 # jwt config
 jwt:
+  header: Auth-Token
   issuer: www.yukens.com
   key: kisszpy
+  context: userId
 # mysql config
 mysql:
   username: root

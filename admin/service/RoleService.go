@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"github.com/youthlin/stream"
 	"github.com/youthlin/stream/types"
 	"go_web/admin/model"
@@ -10,6 +11,9 @@ import (
 	"go_web/global"
 	"time"
 )
+
+var tree = new(Tree)
+var resourceService = new(ResourceService)
 
 type RoleService struct {
 }
@@ -65,12 +69,29 @@ func (RoleService) Modify(req *req.ModifyRoleReq) {
 	dest.UpdateTime = time.Now()
 	global.GDB.Updates(dest)
 }
-func (RoleService) RoleMenus(userId int) {
-	var roleList []model.Role
-	global.GDB.Model(&model.UserRole{}).Where("user_id in ?", userId).Find(&roleList)
+func (RoleService) RoleMenus(userId int) map[string]interface{} {
+	var roleList []model.UserRole
+	global.GDB.Model(&model.UserRole{}).Where("user_id = ?", userId).Find(&roleList)
 	// 获取当前用户的角色列表
 	var list []model.RolePermission
-	global.GDB.Model(&model.RolePermission{}).Where("role_id in ?").Find(&list)
-	// 获取资源构建树形结构
+	var roleIds []int
+	for _, role := range roleList {
+		roleIds = append(roleIds, role.RoleId)
+	}
+	global.GDB.Distinct().Model(&model.RolePermission{}).Where("role_id in ?", roleIds).Find(&list)
+	var ids []int
+	for _, it := range list {
+		ids = append(ids, it.ResourceId)
+	}
+	fmt.Printf("ids is %v \n", ids)
+	//global.GDB.Model(&model.Resource{}).Where("id in ?", ids).Find(&resourceList)
+	var rlist []model.Resource
+	resourceService.GetAllResource(&rlist)
+	var result = map[string]interface{}{}
+
+	buildTree := tree.BuildTree(rlist)
+	result["allResource"] = buildTree
+	result["checkedList"] = ids
+	return result
 
 }

@@ -10,6 +10,7 @@ import (
 	"strconv"
 )
 
+// 系统全局变量
 var (
 	GDB     *gorm.DB
 	Toolkit Utils
@@ -17,10 +18,10 @@ var (
 	CONF    *AppConfig
 )
 
+// 系统常量
 const (
 	AuthToken = "Auth-Token"
 	UserId    = "userId"
-	Issuer    = "www.yukens.com"
 )
 
 func init() {

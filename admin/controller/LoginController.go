@@ -35,3 +35,7 @@ func (LoginController) Login(ctx *gin.Context) {
 func (LoginController) LogOut(ctx *gin.Context) {
 	common.Ok(ctx)
 }
+
+func (LoginController) Test(context *gin.Context) {
+	common.Success("ok,我是一个test服务", context)
+}

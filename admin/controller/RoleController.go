@@ -1,19 +1,22 @@
 package controller
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"go_web/admin/req"
 	"go_web/admin/service"
 	"go_web/common"
 	"go_web/global"
-	"log"
+	"reflect"
+	"strconv"
 )
 
 type RoleController struct {
 }
 
 var (
-	roleService service.RoleService
+	roleService    service.RoleService
+	rolePermission service.RoleResourceService
 )
 
 // Create 添加角色/**
@@ -47,8 +50,21 @@ func (RoleController) Delete(ctx *gin.Context) {
 	common.Ok(ctx)
 }
 func (RoleController) GetRoleMenus(ctx *gin.Context) {
-	userId, exists := ctx.Get(global.UserId)
+	value, exists := ctx.Get(global.CONF.Jwt.Context)
 	if exists {
-		log.Printf("currnet id is %v \n", userId)
+		userId := reflect.ValueOf(value).String()
+		fmt.Printf("get context value is %v \n", userId)
+		uid, _ := strconv.Atoi(userId)
+		menus := roleService.RoleMenus(uid)
+		common.Success(menus, ctx)
+	} else {
+		common.Fail("未知错误", ctx)
 	}
+}
+
+func (RoleController) SubmitPermission(context *gin.Context) {
+	req := &req.SubmitPermissionReq{}
+	context.BindJSON(req)
+	rolePermission.SubmitPermission(req)
+	common.Ok(context)
 }

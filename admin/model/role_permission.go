@@ -10,3 +10,7 @@ type RolePermission struct {
 	UpdateTime time.Time
 	Status     int
 }
+
+func (RolePermission) TableName() string {
+	return "t_role_permission"
+}

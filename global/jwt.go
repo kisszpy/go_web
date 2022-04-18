@@ -2,22 +2,19 @@ package global
 
 import (
 	"errors"
-	"fmt"
 	"github.com/golang-jwt/jwt/v4"
 	"time"
 )
 
-var key = []byte("kisszpy")
-
 func GetToken(userId string) string {
 	claims := jwt.RegisteredClaims{
-		Issuer:    Issuer,
+		Issuer:    CONF.Jwt.Issuer,
 		Subject:   userId,
 		ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * 7 * time.Hour)),
 		IssuedAt:  jwt.NewNumericDate(time.Now()),
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	authToken, _ := token.SignedString(key)
+	authToken, _ := token.SignedString([]byte(CONF.Jwt.Key))
 	return authToken
 }
 
@@ -25,8 +22,7 @@ func Verify(tokenStr string) (*jwt.RegisteredClaims, error) {
 
 	claims := &jwt.RegisteredClaims{}
 	token, err := jwt.ParseWithClaims(tokenStr, claims, func(token *jwt.Token) (interface{}, error) {
-		fmt.Printf("%v \n", claims)
-		return key, nil
+		return []byte(CONF.Jwt.Key), nil
 	})
 	if token.Valid {
 		return claims, nil

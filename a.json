@@ -6,28 +6,6 @@
   "name": "Menu",
   "path": "menu",
   "component": "system/menu"
-},
-
-{
-"meta": {
-"icon": "el-icon-setting",
-"title": "订单管理"
-},
-"name": "Order",
-"path": "/order",
-"redirect": "/order",
-"component": "Layout",
-"alwaysShow": true
-}
-
-{
-"meta": {
-"icon": "el-icon-menu", "title": "销售订单"},
-"name": "Menu",
-"path": "menu",
-"component":
-"system/menu"
 }
 
 
-{"meta": {"icon": "lock", "title": "客户管理"}, "name": "客户管理", "path": "/system", "redirect": "", "component": "Layout", "alwaysShow": true}

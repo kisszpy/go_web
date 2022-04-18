@@ -46,6 +46,7 @@ func AdminRouter(e *gin.Engine) {
 		后台登录接口
 		*/
 		group.POST("/login", loginController.Login)
+		group.POST("/test", loginController.Test)
 		/**
 
 		 */
@@ -93,6 +94,7 @@ func AdminRouter(e *gin.Engine) {
 		group.POST("/system/role/modify", roleController.Modify)
 		group.POST("/system/role/delete", roleController.Delete)
 		group.POST("/system/role/menus", roleController.GetRoleMenus)
+		group.POST("/system/role/submitPermission", roleController.SubmitPermission)
 		/**
 		角色部分 end   ------------------------------
 		*/
