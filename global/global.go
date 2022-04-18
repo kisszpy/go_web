@@ -22,7 +22,7 @@ var (
 	CONF        *AppConfig
 	NacosClient *Nacos
 	MongoClient *mongo.Client
-	RedisClient *redis.Conn
+	RedisClient redis.Conn
 )
 
 // 系统常量
@@ -69,8 +69,7 @@ func initRedis() {
 	connStr := fmt.Sprintf("%v:%v", CONF.Redis.Host, CONF.Redis.Port)
 	client, err := redis.Dial("tcp", connStr, redis.DialPassword(CONF.Redis.Pass))
 	if err == nil {
-		RedisClient = &client
-		client.Do("set", "laohe", "唐荣的电脑是windows64")
+		RedisClient = client
 	} else {
 		fmt.Printf("%v\n", err)
 		panic("redis connect error ....")
