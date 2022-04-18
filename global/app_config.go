@@ -1,10 +1,10 @@
 package global
 
 type AppConfig struct {
-	Mysql   *MySqlConfig   `yaml:"mysql"`
-	Jwt     *JwtConfig     `yaml:"jwt"`
-	Redis   *RedisConfig   `yaml:"redis"`
-	MongoDb *MongoDbConfig `yaml:"mongo"`
+	Mysql *MySqlConfig   `yaml:"mysql"`
+	Jwt   *JwtConfig     `yaml:"jwt"`
+	Redis *RedisConfig   `yaml:"redis"`
+	Mongo *MongoDbConfig `yaml:"mongo"`
 }
 
 type MongoDbConfig struct {

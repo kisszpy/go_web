@@ -19,7 +19,6 @@ func GetToken(userId string) string {
 }
 
 func Verify(tokenStr string) (*jwt.RegisteredClaims, error) {
-
 	claims := &jwt.RegisteredClaims{}
 	token, err := jwt.ParseWithClaims(tokenStr, claims, func(token *jwt.Token) (interface{}, error) {
 		return []byte(CONF.Jwt.Key), nil
