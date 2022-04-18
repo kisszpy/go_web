@@ -7,9 +7,9 @@ jwt:
 # mysql config
 mysql:
   username: root
-  password: Metro#79
-  host: 127.0.0.1
-  port: 3306
+  password: password
+  host: 10.6.2.12
+  port: 3307
 # file upload config
 upload:
   excel:
