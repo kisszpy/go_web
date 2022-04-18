@@ -10,6 +10,12 @@ mysql:
   password: password
   host: 10.6.2.12
   port: 3307
+# redis config
+redis:
+  host: 172.20.103.11
+  port: 6383
+  db: 0
+  pass: poiu@1234
 # file upload config
 upload:
   excel:

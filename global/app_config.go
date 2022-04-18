@@ -3,6 +3,14 @@ package global
 type AppConfig struct {
 	Mysql *MySqlConfig `yaml:"mysql"`
 	Jwt   *JwtConfig   `yaml:"jwt"`
+	Redis *RedisConfig `yaml:"redis"`
+}
+
+type RedisConfig struct {
+	Host string `yaml:"host"`
+	Port int    `yaml:"port"`
+	Db   int    `yaml:"db"`
+	Pass string `yaml:"pass"`
 }
 
 // MySqlConfig 配置清单/**

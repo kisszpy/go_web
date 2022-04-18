@@ -3,6 +3,7 @@ package global
 import (
 	"context"
 	"fmt"
+	"github.com/gomodule/redigo/redis"
 	"github.com/spf13/viper"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -21,6 +22,7 @@ var (
 	CONF        *AppConfig
 	NacosClient *Nacos
 	MongoClient *mongo.Client
+	RedisClient *redis.Conn
 )
 
 // 系统常量
@@ -64,7 +66,15 @@ func initMongoDb() {
 }
 
 func initRedis() {
-
+	connStr := fmt.Sprintf("%v:%v", CONF.Redis.Host, CONF.Redis.Port)
+	client, err := redis.Dial("tcp", connStr, redis.DialPassword(CONF.Redis.Pass))
+	if err == nil {
+		RedisClient = &client
+		client.Do("set", "laohe", "唐荣的电脑是windows64")
+	} else {
+		fmt.Printf("%v\n", err)
+		panic("redis connect error ....")
+	}
 }
 
 func initMysql() {
