@@ -47,6 +47,8 @@ func AdminRouter(e *gin.Engine) {
 		*/
 		group.POST("/login", loginController.Login)
 		group.POST("/test", loginController.Test)
+		group.POST("/testInvoke", loginController.TestInvoke)
+
 		/**
 
 		 */

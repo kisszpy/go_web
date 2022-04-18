@@ -25,11 +25,6 @@ func Cors() gin.HandlerFunc {
 	}
 }
 func main() {
-	// 初始化nacos
-	nc := InitNacos()
-	// 注册服务
-	Register(nc)
-
 	e := gin.Default()
 	e.LoadHTMLGlob("templates/**")
 	e.Static("/www", "./www")
@@ -81,6 +76,7 @@ func isWhiteList(uri string) bool {
 	whiteList := []string{
 		"/api/v1/admin/login",
 		"/api/v1/admin/test",
+		"/api/v1/admin/testInvoke",
 	}
 	for _, item := range whiteList {
 		if item == uri {

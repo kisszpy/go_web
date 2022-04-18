@@ -1,11 +1,14 @@
 package controller
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"go_web/admin/req"
 	"go_web/admin/resp"
 	"go_web/common"
 	"go_web/global"
+	"io/ioutil"
+	"net/http"
 	"strconv"
 )
 
@@ -38,4 +41,16 @@ func (LoginController) LogOut(ctx *gin.Context) {
 
 func (LoginController) Test(context *gin.Context) {
 	common.Success("ok,我是一个test服务", context)
+}
+
+func (LoginController) TestInvoke(context *gin.Context) {
+	fmt.Printf("method is %v", "hello...............")
+	for i := 0; i < 1000; i++ {
+		lb := global.NacosClient.HttpPaths("tf-hades-service")
+		url := fmt.Sprintf("%v%v%v", lb, "/tf-hades", "/testByGo")
+		response, _ := http.Get(url)
+		bytes, _ := ioutil.ReadAll(response.Body)
+		common.Success(string(bytes), context)
+	}
+
 }

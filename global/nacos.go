@@ -1,4 +1,4 @@
-package main
+package global
 
 import (
 	"fmt"
@@ -7,7 +7,13 @@ import (
 	"github.com/nacos-group/nacos-sdk-go/common/constant"
 	"github.com/nacos-group/nacos-sdk-go/vo"
 	"net"
+	"strconv"
 )
+
+var INamingClient naming_client.INamingClient
+
+type Nacos struct {
+}
 
 func LocalIP() string {
 	addrs, err := net.InterfaceAddrs()
@@ -26,7 +32,7 @@ func LocalIP() string {
 	return ""
 }
 
-func InitNacos() naming_client.INamingClient {
+func (Nacos) InitNacos() {
 	config := constant.ClientConfig{
 		TimeoutMs:           5000,
 		NotLoadCacheAtStart: true,
@@ -50,11 +56,11 @@ func InitNacos() naming_client.INamingClient {
 	if err != nil {
 		fmt.Printf("init error %v \n", err)
 	}
-	return namingClient
+	INamingClient = namingClient
 }
 
-func Register(nc naming_client.INamingClient) {
-	nc.RegisterInstance(vo.RegisterInstanceParam{
+func (Nacos) Register() {
+	INamingClient.RegisterInstance(vo.RegisterInstanceParam{
 		Ip:          LocalIP(),
 		Port:        9999,
 		Weight:      10,
@@ -66,4 +72,12 @@ func Register(nc naming_client.INamingClient) {
 		GroupName:   "DEFAULT_GROUP",
 		Ephemeral:   true,
 	})
+}
+
+func (Nacos) HttpPaths(serverName string) (httpPath string) {
+	instance, _ := INamingClient.SelectOneHealthyInstance(vo.SelectOneHealthInstanceParam{
+		ServiceName: serverName,
+	})
+	httpPath = "http://" + instance.Ip + ":" + strconv.Itoa(int(instance.Port))
+	return
 }

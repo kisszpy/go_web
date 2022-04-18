@@ -12,10 +12,11 @@ import (
 
 // 系统全局变量
 var (
-	GDB     *gorm.DB
-	Toolkit Utils
-	Excel   common.Excel
-	CONF    *AppConfig
+	GDB         *gorm.DB
+	Toolkit     Utils
+	Excel       common.Excel
+	CONF        *AppConfig
+	NacosClient *Nacos
 )
 
 // 系统常量
@@ -25,9 +26,17 @@ const (
 )
 
 func init() {
+	InitNacosServer()
 	initConfig()
 	initDb()
 
+}
+
+func InitNacosServer() {
+	var nacosInstance Nacos
+	nacosInstance.InitNacos()
+	nacosInstance.Register()
+	NacosClient = &nacosInstance
 }
 
 func initDb() {
