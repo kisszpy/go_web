@@ -21,25 +21,37 @@ var (
 
 // 系统常量
 const (
-	AuthToken = "Auth-Token"
-	UserId    = "userId"
+	AuthToken  = "Auth-Token"
+	UserId     = "userId"
+	ConfigFile = "config.yaml"
+	ConfigType = "yaml"
 )
 
 func init() {
-	InitNacosServer()
-	initConfig()
-	initDb()
+	initConfig()      // 初始化配置文件
+	initNacosServer() // 注册到nacos
+	initMysql()       // 初始化mysql
+	initMongoDb()     // 初始化mongodb
+	initRedis()       // 初始化redis
 
 }
 
-func InitNacosServer() {
+func initNacosServer() {
 	var nacosInstance Nacos
 	nacosInstance.InitNacos()
 	nacosInstance.Register()
 	NacosClient = &nacosInstance
 }
 
-func initDb() {
+func initMongoDb() {
+
+}
+
+func initRedis() {
+
+}
+
+func initMysql() {
 	// use config file to load dsn
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/go_db?charset=utf8mb4&parseTime=true",
 		CONF.Mysql.Username,
@@ -55,10 +67,11 @@ func initDb() {
 	GDB = database
 }
 
+// bootstrap
 func initConfig() {
 	v := viper.New()
-	v.SetConfigType("yaml")
-	v.SetConfigFile("config.yaml")
+	v.SetConfigType(ConfigType)
+	v.SetConfigFile(ConfigFile)
 	err := v.ReadInConfig()
 	if err == nil {
 		config := AppConfig{}
