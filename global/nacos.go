@@ -38,7 +38,7 @@ func (Nacos) InitNacos() {
 		NotLoadCacheAtStart: true,
 		LogDir:              "/tmp/log",
 		CacheDir:            "/tmp/cache",
-		LogLevel:            "debug",
+		LogLevel:            "info",
 	}
 	serverConfig := []constant.ServerConfig{
 		{

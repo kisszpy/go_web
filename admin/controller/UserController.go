@@ -40,7 +40,7 @@ func (UserController) Modify(ctx *gin.Context) {
 }
 
 func (UserController) GetUserInfo(ctx *gin.Context) {
-	value, exists := ctx.Get(global.UserId)
+	value, exists := ctx.Get(global.CONF.Jwt.Context)
 	if exists {
 		fmt.Printf("current user is %v \n", value)
 	}

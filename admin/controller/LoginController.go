@@ -49,6 +49,7 @@ func (LoginController) Test(ctx *gin.Context) {
 	common.Success("ok,我是一个test服务", ctx)
 }
 
+// golang invoke java feign
 func (LoginController) TestInvoke(context *gin.Context) {
 	fmt.Printf("method is %v", "hello...............")
 	for i := 0; i < 1000; i++ {

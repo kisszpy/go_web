@@ -27,7 +27,6 @@ var (
 
 // 系统常量
 const (
-	AuthToken  = "Auth-Token"
 	UserId     = "userId"
 	ConfigFile = "config.yaml"
 	ConfigType = "yaml"
@@ -85,7 +84,6 @@ func initMysql() {
 		CONF.Mysql.Password,
 		CONF.Mysql.Host,
 		strconv.Itoa(CONF.Mysql.Port))
-	// dsn := "root:Metro#79@tcp(127.0.0.1:3306)/go_db?charset=utf8mb4&parseTime=true"
 	database, err := gorm.Open(mysql.Open(dsn))
 	if err != nil {
 		log.Fatalf("can't open db %v \n", err)
