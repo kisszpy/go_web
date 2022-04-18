@@ -50,8 +50,9 @@ func initNacosServer() {
 }
 
 func initMongoDb() {
-	// use config file to load dsn
-	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://user:Test#1234@172.20.30.23:8635,172.20.30.81:8635/seagull?authSource=admin&replicaSet=replica"))
+	// use config file to load mongodb
+	// client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://user:Test#1234@172.20.30.23:8635,172.20.30.81:8635/seagull?authSource=admin&replicaSet=replica"))
+	client, err := mongo.NewClient(options.Client().ApplyURI(CONF.MongoDb.Uri))
 	if err == nil {
 		e := client.Connect(context.TODO())
 		if e == nil {
