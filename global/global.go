@@ -1,8 +1,11 @@
 package global
 
 import (
+	"context"
 	"fmt"
 	"github.com/spf13/viper"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"go_web/common"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -17,6 +20,7 @@ var (
 	Excel       common.Excel
 	CONF        *AppConfig
 	NacosClient *Nacos
+	MongoClient *mongo.Client
 )
 
 // 系统常量
@@ -44,7 +48,19 @@ func initNacosServer() {
 }
 
 func initMongoDb() {
-
+	// use config file to load dsn
+	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://user:Test#1234@172.20.30.23:8635,172.20.30.81:8635/seagull?authSource=admin&replicaSet=replica"))
+	if err == nil {
+		e := client.Connect(context.TODO())
+		if e == nil {
+			client.Ping(context.TODO(), nil)
+		}
+		MongoClient = client
+		defer client.Disconnect(context.TODO())
+	} else {
+		// fmt.Printf("error to connect mongodb %v \n", err)
+		panic("error to load mongodb")
+	}
 }
 
 func initRedis() {

@@ -5,12 +5,15 @@ import (
 	"github.com/gin-gonic/gin"
 	"go_web/admin/req"
 	"go_web/admin/resp"
+	"go_web/admin/service"
 	"go_web/common"
 	"go_web/global"
 	"io/ioutil"
 	"net/http"
 	"strconv"
 )
+
+var loginService = new(service.LoginService)
 
 type LoginController struct {
 }
@@ -39,8 +42,11 @@ func (LoginController) LogOut(ctx *gin.Context) {
 	common.Ok(ctx)
 }
 
-func (LoginController) Test(context *gin.Context) {
-	common.Success("ok,我是一个test服务", context)
+func (LoginController) Test(ctx *gin.Context) {
+	req := &req.MongoOptReq{}
+	ctx.BindJSON(req)
+	loginService.MongoTest(req)
+	common.Success("ok,我是一个test服务", ctx)
 }
 
 func (LoginController) TestInvoke(context *gin.Context) {
